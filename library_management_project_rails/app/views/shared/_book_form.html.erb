@@ -1,0 +1,43 @@
+<%= form_for @book do |f| %>
+  <%= csrf_meta_tags %>
+  <%= f.hidden_field :id if action_name == "edit" %>
+  <div class="mb-3">
+    <%= f.label :name, class: "form-label" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :author, class: "form-label" %>
+    <%= f.text_field :author, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :publication, class: "form-label" %>
+    <%= f.text_field :publication, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :genres, class: "form-label" %>
+    <%= f.text_field :genres, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :description, class: "form-label" %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :quantity, class: "form-label" %>
+    <%= f.number_field :quantity, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :remaining_books, class: "form-label" %>
+    <%= f.number_field :remaining_books, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :section_id, "Select a Section", class: "form-label" %>
+    <%= f.collection_select :section_id, Section.all, :id, :name, { prompt: "Select a Section" }, class: "form-control", id: "section-select" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :rak_id, "Select a Rack", class: "form-label" %>
+    <%= f.collection_select :rak_id, [], :id, :name, { prompt: "Select a Rak" }, class: "form-control", id: "rak-select" %>
+  </div>
+  <div class="text-center">
+    <%= f.submit submit_text, class: "btn btn-success" %>
+  </div>
+<% end %>

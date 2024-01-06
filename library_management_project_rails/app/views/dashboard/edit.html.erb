@@ -1,0 +1,12 @@
+<div class="container mt-5">
+  <%if can? :manage, User %>
+    <h1 class="text-center text-warning">Edit User</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <%= render 'shared/form', user: @user, user_form_url: dashboard_path(@user), form_method: :patch, submit_text: "Update" %>
+      </div>
+    </div>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>

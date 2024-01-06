@@ -1,0 +1,2 @@
+module BookManageHelper
+end

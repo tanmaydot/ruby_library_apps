@@ -1,0 +1,47 @@
+<div class="container mt-5">
+  <% if can? :manage, Book %>
+    <h2 class="text-center text-warning">Edit Book</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <%= render 'shared/book_form', book: @book, submit_text: "Update Book" %>
+      </div>
+    </div>
+    <!-- custom js for selecting racks -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const sectionSelect = document.getElementById("section-select");
+        const rakSelect = document.getElementById("rak-select");
+
+        function updateRakOptions() {
+          const selectedSectionId = sectionSelect.value;
+
+          $.ajax({
+            url: `http://127.0.0.1:3000/backend/rak/?sectionId=${selectedSectionId}`,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+              // Clear and populate the rakSelect options
+              rakSelect.innerHTML = "";
+              data.forEach(rak => {
+                const option = document.createElement("option");
+                option.value = rak.id;
+                option.text = rak.name;
+                rakSelect.appendChild(option);
+              });
+            },
+            error: function (xhr, status, error) {
+              // Handle any errors that occur during the AJAX request
+              console.error("Error: " + error);
+            }
+          });
+        }
+
+        updateRakOptions();
+
+        sectionSelect.addEventListener("change", updateRakOptions);
+      });
+    </script>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>

@@ -1,0 +1,13 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Users") do |sheet|
+  sheet.add_row %w(id name email location amount start_date end_date role remaining_days)
+
+  @users.each do |user|
+    next if user.mem_end_date.nil? # skip if nil
+    no_of_days = (user.mem_end_date - Date.today).to_i
+    if no_of_days <= 400
+      sheet.add_row [user.id, user.name, user.email, user.location, user.total_amount_paid, user.mem_start_date, user.mem_end_date, user.role, user.remaining_days]
+    end
+  end
+end

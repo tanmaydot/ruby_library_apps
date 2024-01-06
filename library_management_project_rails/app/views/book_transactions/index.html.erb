@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="m-1 p-1">
+    <div class="mb-3">
+      <%= link_to "Assign Books", new_book_transaction_path, class: "btn btn-light text-decoration-none" %>
+    </div>
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Book Name</th>
+          <th scope="col">Book ID</th>
+          <th scope="col">User Name</th>
+          <th scope="col">User ID</th>
+          <th scope="col">Status</th>
+          <th scope="col">Expected Date</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @book_transactions.each do |book_transaction| %>
+          <tr>
+            <td><%= book_transaction.book.name.presence || "N/A" %></td>
+            <td><%= book_transaction.book_id.presence || "N/A" %></td>
+            <td><%= book_transaction.user.name.presence || "N/A" %></td>
+            <td><%= book_transaction.user_id.presence || "N/A" %></td>
+            <td>
+              <% if book_transaction.status == "open" %>
+                <span class="alert alert-primary p-1 text-center">Open</span>
+              <% elsif book_transaction.status == "close" %>
+                <span class="alert alert-info p-1 text-center">Close</span>
+              <% else %>
+                <%= book_transaction.status.presence || "N/A" %>
+              <% end %>
+            </td>
+            <td><%= book_transaction.expected_date.presence || "N/A" %></td>
+            <td>
+              <%= link_to "View", book_transaction_path(book_transaction), class: "btn btn-primary text-decoration-none" %>
+              <%= link_to "Receive", edit_book_transaction_path(book_transaction), class: "btn btn-warning text-decoration-none" %>
+              <%= button_to "Delete", book_transaction_path(book_transaction), method: :delete, class: 'btn btn-danger', form: { class: 'd-inline' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

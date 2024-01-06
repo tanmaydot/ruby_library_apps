@@ -1,0 +1,7 @@
+<div class="container">
+  <h3><%= @user.try(:name) %></h3>
+  <h3><%= @user.try(:email) %></h3>
+  <h4><%= @user.try(:mem_start_date) %></h4>
+  <h4><%= @user.try(:mem_end_date) %></h4>
+  <h1><%= @user.try(:total_amount_paid) %></h1>
+</div>

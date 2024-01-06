@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  book_transactions_type: 1
+  admin_user_id: 1
+  book_id: 1
+  number_of_pieces: 1
+
+two:
+  book_transactions_type: 1
+  admin_user_id: 1
+  book_id: 1
+  number_of_pieces: 1

@@ -1,0 +1,12 @@
+<div class="container mt-5">
+  <% if can? :manage, Rak %>
+    <h1 class="text-center text-warning">Edit Rack</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <%= render partial: 'shared/rak_form', locals: { rak: @rak } %>
+      </div>
+    </div>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>

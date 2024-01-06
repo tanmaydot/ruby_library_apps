@@ -1,0 +1,32 @@
+<!-- <div class="col-md-2 mx-auto mt-3">
+          <form action="<%= backend_membership_index_path %>" method="post">
+            <div class="form-group">
+              <label for="membership_user_id">Select User For Membership</label>
+              <select name="membership[user_id]" id="membership_user_id" class="form-control m-1">
+                <option value="">Select User</option>
+                <% User.all.each do |user| %>
+                  <option value="<%= user.id %>"><%= user.name %></option>
+                <% end %>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="membership_mem_start_date">Membership Start Date</label>
+              <input type="date" name="membership[mem_start_date]" id="membership_mem_start_date" class="form-control m-1">
+            </div>
+
+            <div class="form-group">
+              <label for="membership_mem_end_date">Membership End Date</label>
+              <input type="date" name="membership[mem_end_date]" id="membership_mem_end_date" class="form-control m-1">
+            </div>
+
+            <div class="form-group">
+              <label for="membership_total_amount_paid">Total Amount Paid</label>
+              <input type="number" name="membership[total_amount_paid]" id="membership_total_amount_paid" class="form-control m-1">
+            </div>
+
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+            <input type="submit" value="Create Membership" class="btn btn-success m-2 p-2">
+          </form>
+        </div> -->

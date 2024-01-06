@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <% if can? :read, Rak %>
+    <h2 class="mb-4 text-center text-warning">List of Racks</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <% if current_user.admin? %>
+        <%= link_to "Create New Rack", new_rak_path, class: 'btn btn-success' %>
+      <% end %>
+      <%= form_tag(rak_index_path, method: :get, class: 'search-form') do %>
+        <div class="input-group">
+          <%= text_field_tag(:search, params[:search], class: 'form-control', placeholder: 'Search Raks') %>
+          <%= submit_tag('Search', class: 'btn btn-outline-success') %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <% @raks.each do |rak| %>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow">
+            <div class="card-header">
+              <h5 class="card-title">
+                <strong>Rack Name:</strong> <%= rak.name.presence || 'N/A' %>
+              </h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong>Section Name:</strong> <%= rak.section.name || 'N/A' %>
+              </p>
+            </div>
+            <div class="card-footer text-center">
+              <%= link_to "View", rak_path(rak), class: 'btn btn-primary btn-sm m-1' %>
+              <% if can? :manage, Rak %>
+                <%= link_to "Edit", edit_rak_path(rak), class: 'btn btn-dark btn-sm m-1' %>
+                <%= form_tag rak_path(rak), method: :delete do %>
+                  <%= csrf_meta_tags %>
+                  <button type="submit" class="btn btn-danger btn-sm p-1">Delete</button>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>

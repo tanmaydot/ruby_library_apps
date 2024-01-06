@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>Book Details</h1>
+  <div class="m-1 p-1">
+    <h3>Book ID: <%= @book_transaction.book_id.presence || "N/A" %></h3>
+    <h3>User ID: <%= @book_transaction.user_id.presence || "N/A" %></h3>
+    <hr />
+    <h4>Status: <%= @book_transaction.status.presence || "N/A" %></h4>
+    <h4>Expected Date: <%= @book_transaction.expected_date.presence || "N/A" %></h4>
+    <%= link_to "Edit Book Transaction", edit_book_transaction_path(@book_transaction), class: "btn btn-danger text-decoration-none" %>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="container mt-5">
+  <% if can? :read, Book %>
+    <h1 class="text-center text-warning">Book Details</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Book Name:</h5>
+            <p><%= @book.name.presence || 'N/A' %></p>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">In Section:</h5>
+            <p><%= @book.section.try(:name).presence || 'N/A' %></p>
+            <h5 class="card-title">In Rak:</h5>
+            <p><%= @book.rak.try(:name).presence || 'N/A' %></p>
+            <h5 class="card-title">Author:</h5>
+            <p><%= @book.author.presence || 'N/A' %></p>
+            <h5 class="card-title">Publication:</h5>
+            <p><%= @book.publication.presence || 'N/A' %></p>
+            <h5 class="card-title">Genres:</h5>
+            <p><%= @book.genres.presence || 'N/A' %></p>
+            <h5 class="card-title">Stock Status:</h5>
+            <% if @stock_status == "Out of Stock" %>
+              <p>Book is currently out of stock.</p>
+            <% else %>
+              <p>Available stock: <%= @book.remaining_books %></p>
+            <% end %>
+          </div>
+          <div class="card-footer">
+            <h5 class="card-title">Description:</h5>
+            <p><%= @book.description.presence || 'N/A' %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

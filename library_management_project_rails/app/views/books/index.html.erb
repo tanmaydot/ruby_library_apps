@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <% if can? :read, Book %>
+    <h2 class="mb-4 text-center text-warning">List of Books</h2>
+    <% if current_user.admin? %>
+      <%= link_to "Create New Book", new_book_path, class: "btn btn-success mb-3 text-decoration-none" %>
+    <% end %>
+    <div class="row">
+      <% @books.each do |book| %>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-header">
+              <h5><strong>Name:</strong> <%= book.name.presence || 'N/A' %></h5>
+            </div>
+            <div class="card-body">
+              <p><strong>Author:</strong> <%= book.author.presence || 'N/A' %></p>
+              <p><strong>Publication:</strong> <%= book.publication.presence || 'N/A' %></p>
+              <p><strong>Quantity:</strong> <%= book.quantity.presence || 'N/A' %></p>
+              <p><strong>Remaining Quantity:</strong> <%= book.remaining_books.presence || 'N/A' %></p>
+              <p><strong>Section:</strong> :<%= book.section.try(:name).presence || 'N/A' %></p>
+              <p><strong>Rack:</strong> <%= book.rak.try(:name).presence || 'N/A' %></p>
+              <p><strong>Description:</strong> <%= book.description.presence || 'N/A' %></p>
+            </div>
+            <div class="card-footer text-center">
+              <%= link_to "View", book_path(book), class: 'btn btn-primary btn-sm p-1' %>
+              <% if can? :manage, Book %>
+                <%= link_to "Edit", edit_book_path(book), class: 'btn btn-dark btn-sm ml-1 p-1' %>
+                <%= button_to "Delete", book_path(book), method: :delete, class: 'btn btn-danger btn-sm ml-1 p-1', form: { class: 'd-inline' } %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <h3 class="text-center mt-4">Our Catalog ends here!</h3>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>

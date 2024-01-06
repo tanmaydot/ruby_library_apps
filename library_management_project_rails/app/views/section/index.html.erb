@@ -1,0 +1,43 @@
+<div class="container mt-5">
+  <% if can? :read, Section %>
+    <h2 class="mb-4 text-center text-warning">List of Our Sections</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <% if current_user.admin? %>
+        <%= link_to "Create New Section", new_section_path, class: 'btn btn-success' %>
+      <% end  %>
+      <%= form_tag(section_index_path, method: :get, class: 'search-form') do %>
+        <div class="input-group">
+          <%= text_field_tag(:search, params[:search], class: 'form-control', placeholder: 'Search Sections') %>
+          <%= submit_tag('Search', class: 'btn btn-outline-success') %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <% @sections.each do |section| %>
+        <div class="col-md-4 mb-3">
+          <div class="card shadow">
+            <div class="card-header">
+              <h5 class="card-title">
+                <strong><%= section.name.presence || 'N/A' %> Section</strong>
+              </h5>
+            </div>
+            <div class="card-footer">
+              <div class="text-center">
+                <%= link_to "View", section_path(section), class: 'btn btn-primary btn-sm m-1' %>
+                <% if can? :manage, Section %>
+                  <%= link_to "Edit", edit_section_path(section), class: 'btn btn-dark btn-sm m-1' %>
+                  <%= form_tag section_path(section), method: :delete do %>
+                    <%= csrf_meta_tags %>
+                    <button type="submit" class="btn btn-danger btn-sm p-1">Delete</button>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>

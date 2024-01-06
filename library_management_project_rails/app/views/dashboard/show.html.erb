@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <%if can? :manage, User %>
+  <h1 class="text-center text-warning">User Details</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">User Name: <%= @user.name.presence || 'N/A' %></h2>
+          <p><strong>User Email:</strong> <%= @user.email.presence || 'N/A' %></p>
+        </div>
+        <div class="card-body">
+          <p><strong>User Age:</strong> <%= @user.age.presence || 'N/A' %></p>
+        </div>
+        <div class="card-footer">
+          <p><strong>User Location:</strong> <%= @user.location.presence || 'N/A' %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%else%>
+    <%= render partial: '/shared/not_authorized'%>
+  <%end%>
+</div>

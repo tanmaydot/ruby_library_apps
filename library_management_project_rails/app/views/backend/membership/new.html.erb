@@ -1,0 +1,66 @@
+<div class="container m-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title"><%= @user.try(:name) %></h3>
+          <h4 class="card-subtitle mb-2 text-muted"><%= @user.try(:email) %></h4>
+          <%= form_tag backend_membership_index_path(user_id: @user.id), class: "mt-4" do %>
+            <h1>Assign Membership</h1>
+            <div class="form-group">
+              <%= label_tag 'total_amount_paid', "Amount Paid" %>
+              <%= select_tag 'user[total_amount_paid]', options_for_select([99, 199, 499, 799, 999]), class: 'form-control', id: 'membership_amount' %>
+            </div>
+            <div class="form-group">
+              <%= label_tag 'membership_start_date', 'Start Date' %>
+              <%= date_field :user, :mem_start_date, class: 'form-control datepicker', id: 'membership_start_date' %>
+            </div>
+            <div class="form-group">
+              <%= label_tag 'membership_end_date', 'End Date' %>
+              <%= date_field :user, :mem_end_date, class: 'form-control datepicker', id: 'membership_end_date' %>
+            </div>
+            <%= submit_tag "Assign Membership", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const membershipAmountSelect = document.getElementById('membership_amount');
+    const startDateInput = document.getElementById('membership_start_date');
+    const endDateInput = document.getElementById('membership_end_date');
+
+    function updateEndDate() {
+      const selectedAmount = parseInt(membershipAmountSelect.value);
+      const startDate = new Date(startDateInput.value);
+
+      if (!isNaN(startDate.getTime())) {
+        let endDate = new Date(startDate);
+          if (selectedAmount === 99){
+          endDate.setDate(endDate.getDate() + 5);
+          }
+        else if (selectedAmount === 199) {
+          endDate.setDate(endDate.getDate() + 30);
+        } else if (selectedAmount === 499) {
+          endDate.setDate(endDate.getDate() + 90);
+        } else if (selectedAmount === 799) {
+          endDate.setDate(endDate.getDate() + 180);
+        } else if (selectedAmount === 999) {
+          endDate.setDate(endDate.getDate() + 366);
+        }
+
+        const formattedEndDate = endDate.toISOString().split('T')[0];
+        endDateInput.value = formattedEndDate;
+      } else {
+        endDateInput.value = '';
+      }
+    }
+
+    startDateInput.addEventListener('change', updateEndDate);
+    membershipAmountSelect.addEventListener('change', updateEndDate);
+
+    updateEndDate();
+  });
+</script>

@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <% if flash[:notice].present? %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% elsif flash[:alert].present? %>
+        <div class="alert alert-danger">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+      <%= form_for @book_transaction, class: "mb-4" do |f| %>
+        <%= csrf_meta_tags %>
+        <%= f.hidden_field :id if action_name == "edit" %>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <%= f.label :user_id, class: "form-label" %>
+            <%= f.collection_select :user_id, User.all, :id, :name, { prompt: "Select a User" }, class: "form-select" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :book_id, class: "form-label" %>
+            <%= f.collection_select :book_id, Book.all, :id, :name, { prompt: "Select a Book" }, class: "form-select" %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <%= f.label :status, class: "form-label" %>
+            <%= f.select :status, BookTransaction.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "form-select" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :expected_date, class: "form-label" %>
+            <%= f.date_field :expected_date, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class=" text-center m-2 p-4">
+            <%= f.submit submit_text, class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

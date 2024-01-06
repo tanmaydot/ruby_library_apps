@@ -1,0 +1,12 @@
+<div class="container mt-5">
+  <% if can? :manage, Section %>
+    <h1 class="text-center text-warning">Edit Section</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <%= render partial: 'shared/section_form', locals: { section: @section, form_path: section_path(@section), form_method: :patch } %>
+      </div>
+    </div>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>

@@ -1,0 +1,12 @@
+<div class="container mt-5">
+  <%if can? :manage, User %>
+    <h1 class="text-center text-warning">Create User</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <%= render 'shared/form', user: @user, user_form_url: user_index_path, form_method: :post, submit_text: "Submit" %>
+      </div>
+    </div>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>

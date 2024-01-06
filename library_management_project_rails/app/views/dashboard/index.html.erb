@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <% if can? :manage, User %>
+    <h2 class="mb-4 text-center text-warning">List of Users</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <%= link_to "Create New User", new_dashboard_path, class: 'btn btn-success mb-3' %>
+      </div>
+      <div class="col-md-8">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <%= form_tag(dashboard_index_path, method: :get, class: 'input-group search-form') do %>
+              <%= text_field_tag(:search, params[:search], class: 'form-control', placeholder: 'Search Users') %>
+              <%= submit_tag('Search', class: 'btn btn-outline-warning') %>
+            <% end %>
+          </div>
+          <div class="col-md-6">
+            <%= form_tag(dashboard_index_path, method: :get, class: 'input-group filter-form') do %>
+              <%= hidden_field_tag(:filter, 'true') %>
+              <%= number_field_tag(:filter_days, class: 'form-control') %>
+              <%= submit_tag('Filter', class: 'btn btn-outline-warning') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <% @users.each do |user| %>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow">
+            <div class="card-header">
+              <h5 class="card-title mb-0"><strong>Name:</strong> <%= user.name.presence || 'N/A' %></h5>
+            </div>
+            <div class="card-body">
+              <p><strong>Email:</strong> <%= user.email.presence || 'N/A' %></p>
+              <p><strong>Role:</strong> <%= user.role.presence || 'N/A' %></p>
+              <p><strong>Age:</strong> <%= user.age.presence || 'N/A' %></p>
+              <p><strong>Location:</strong> <%= user.location.presence || 'N/A' %></p>
+              <% unless user.role == "admin" %>
+                <p><strong>Total Amount Paid:</strong> <%= user.total_amount_paid.presence || 'N/A' %></p>
+                <p><strong>Membership Dates</strong><br />
+                  Start Date - <%= user.mem_start_date.presence || 'N/A' %><br />
+                  End Date - <%= user.mem_end_date.presence || 'N/A' %>
+                </p>
+              <% end %>
+            </div>
+            <div class="card-footer text-center">
+              <%= link_to "View", dashboard_path(user), class: 'btn btn-primary btn-sm m-1' %>
+              <%= link_to "Edit", edit_dashboard_path(user), class: 'btn btn-dark btn-sm m-1' %>
+              <% unless user.role == "admin" %>
+                <%= link_to "Membership", new_backend_membership_path(user_id: user.id), class: 'btn btn-secondary btn-sm m-1' %>
+              <% end %>
+              <%= form_tag dashboard_path(user), method: :delete, class: 'd-inline' do %>
+                <%= csrf_meta_tags %>
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render partial: '/shared/not_authorized' %>
+  <% end %>
+</div>
